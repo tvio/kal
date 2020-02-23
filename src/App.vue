@@ -1,28 +1,17 @@
 <template>
   <v-app >
-    <v-app-bar
-      app
-      dark
-    >
+    <v-app-bar app dark color="primary">
       <div class="d-flex align-center">
         <v-img
-          alt="Vuetify Logo"
+          alt="Kalendar"
           class="shrink mr-2"
           contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
+          src="https://img.icons8.com/officel/40/000000/calendar.png"
           transition="scale-transition"
-          width="40"
-        />
-
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
+          width="40">
+         </v-img>
+         <h2 class="font-weight-bold ">Kalendář Tomíka a Janíka</h2>
+          </div>
 
       <v-spacer></v-spacer>
 
@@ -31,7 +20,7 @@
         target="_blank"
         text
       >
-        <span class="mr-2">Latest Release</span>
+        <span class="mr-2">Přihlásit</span>
         <v-icon>mdi-open-in-new</v-icon>
       </v-btn>
     </v-app-bar>
