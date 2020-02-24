@@ -1,11 +1,13 @@
 <template>
          <v-card  >
         <v-card-title>
-          <span class="headline">User Profile</span>
+          <span class="headline">Edituj a pak hlavně ukládej.
+            Svět je velikej a čas malinkej</span>
         </v-card-title>
         <v-card-text>
           <v-container>
-              <v-text-field label="kdo"></v-text-field>
+               <v-text-field disabled label="Datum">{{edit.datum}}{{edit.den}}</v-text-field>
+              <v-text-field label="kdo">{{edit.kdo}}</v-text-field>
               <v-text-field label="Pozn1" required></v-text-field>
               <v-text-field label="Pozn2" hint="example of helper text only on focus"></v-text-field>
               <v-text-field label="Pozn3" hint="example of persistent helper text" persistent-hint required></v-text-field>
@@ -25,11 +27,15 @@ import Vue from 'vue'
 import store from '../store/index'
 export default Vue.extend({
   name: 'Editor',
+  props: ['edit'],
   // props: { editovat: Boolean },
   methods: {
     close: function () {
       // console.log(this.editovat)
       this.$store.state.editace = false
+    },
+    show: function () {
+      console.log(this.edit)
     }
   }
 })

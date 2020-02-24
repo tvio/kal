@@ -23,7 +23,7 @@
 import Vue from 'vue'
 // import store from '../store/index'
 export default Vue.extend({
-  name: 'jedenDen,',
+  name: 'den',
   props: ['den']
 
 })
