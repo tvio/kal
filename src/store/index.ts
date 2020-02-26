@@ -17,7 +17,7 @@ export default new Vuex.Store({
     editace: false
   },
   getters: {
-    denByID: state => (id: number) => {
+    denByID: (state) => (id: number) => {
       return state.dny.find(den => den.id === id)
     }
   },

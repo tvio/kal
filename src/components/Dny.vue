@@ -2,18 +2,19 @@
   <v-container>
 
        <v-card   v-for="(den, index) in $store.state.dny"  :key="index" >
-         <Den :den="den"></Den>
-  <v-dialog  :retain-focus="false" v-model="$store.state.editace"  width="645" >
+         <Den :den="den">  </Den>
+             <v-dialog  :retain-focus="false" v-model="$store.state.editace"  width="645" >
      <template v-slot:activator="{ on }">
       <v-btn color="orange"
          text
        v-on="on"
-       @click = "console">
+        >
           Editovat
           </v-btn>
-     </template>
-       <editace :edit="$store.getters.denByID(den.id)"></editace>
-  </v-dialog >
+         </template>
+          <editace :edit="den"></editace>
+      </v-dialog >
+
          </v-card>
              <!-- <div v-for = "den in $store.state.dny" :key="den">
         {{den.datum}}
@@ -30,11 +31,9 @@ import Editace from './Editace.vue'
 import store from '../store/index'
 export default Vue.extend({
   name: 'Dny',
-  methods: {
-    console: function () {
-      console.log(this.$store.getters.denByID(2))
-    }
-  },
+  // mounted: function () {
+  //   console.log(this.$store.getters.denByID(2))
+  // },
   components: {
     Den,
     Editace
