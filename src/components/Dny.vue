@@ -3,22 +3,13 @@
 
        <v-card   v-for="(den, index) in $store.state.dny"  :key="index" >
          <Den :den="den">  </Den>
-             <v-dialog  :retain-focus="false" v-model="$store.state.editace"  width="645" >
-     <template v-slot:activator="{ on }">
-      <v-btn color="orange"
-         text
-       v-on="on"
-        >
-          Editovat
-          </v-btn>
-         </template>
-          <editace :edit="den"></editace>
-      </v-dialog >
-
+       <v-btn color="orange"  text  @click.stop="dialog=true;edit=findOne(den.id);" >Editovat</v-btn>
          </v-card>
+          <editace v-if="dialog" :edit="edit" :dialog="dialog" ></editace>
              <!-- <div v-for = "den in $store.state.dny" :key="den">
         {{den.datum}}
     </div> -->
+    <!-- <v-dialog  :retain-focus="false" v-model="dialog"  width="600" > -->
 
   </v-container>
 </template>
@@ -32,8 +23,13 @@ import store from '../store/index'
 export default Vue.extend({
   name: 'Dny',
   // mounted: function () {
-  //   console.log(this.$store.getters.denByID(2))
+  //   console.log(this.$store.getters.denByID(9))
   // },
+  methods: {
+    findOne: function (id: number) {
+      return this.$store.getters.denByID(id)
+    }
+  },
   components: {
     Den,
     Editace
@@ -47,6 +43,8 @@ export default Vue.extend({
   //   }
   // },
   data: () => ({
+    dialog: false,
+    edit: null
   })
 
 })
