@@ -1,11 +1,10 @@
 <template>
   <v-container>
-
        <v-card   v-for="den in $store.state.dny"  :key="den.id" >
          <Den :den="den">  </Den>
-       <v-btn color="orange"  text  @click.stop="$set(dialog,den.id,true);log()" >Editovat</v-btn>
+       <v-btn color="orange"  text  @click.stop="$set(editDen,den.id,den);dialog=true;index=den.id;log()" >Editovat</v-btn>
          </v-card>
-          <editace v-if="dialog[0]"  :dialog="dialog[0]" ></editace>
+          <editace  :editDen="editDen[index]" :dialog="dialog" ></editace>
              <!-- <div v-for = "den in $store.state.dny" :key="den">
         {{den.datum}}
     </div> -->
@@ -22,7 +21,10 @@ import Editace from './Editace.vue'
 import store from '../store/index'
 export default Vue.extend({
   data: () => ({
-    dialog: [{}]
+    den: {},
+    editDen: [{}],
+    dialog: false,
+    index: null
   }),
   name: 'Dny',
   // mounted: function () {
@@ -33,7 +35,8 @@ export default Vue.extend({
       return this.$store.getters.denByID(id)
     },
     log: function () {
-      console.log(this.dialog[0])
+      console.log(this.dialog)
+      console.log(this.editDen)
     }
   },
   components: {

@@ -1,5 +1,5 @@
 <template>
- <v-dialog v-model="dialog[0]" width="645" >
+ <v-dialog v-model="dialog"  width="645" >
              <v-card  >
         <v-card-title>
           <span class="headline">Edituj a pak hlavně ukládej.
@@ -16,10 +16,9 @@
          </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click.stop="$set(dialog, dialog.id, false)">Close</v-btn>
-          <v-btn color="blue darken-1" text @click.stop="$set(dialog, dialog.id, false)">Save</v-btn>
-        </v-card-actions>
-      </v-card>
+          <v-btn color="blue darken-1" text @click.stop="dialog=false">Close</v-btn>
+          <v-btn color="blue darken-1" text @click.stop="dialog=false">Save</v-btn>
+        </v-card-actions>      </v-card>
          </v-dialog >
 </template>
 
@@ -29,28 +28,18 @@ import Vue from 'vue'
 import store from '../store/index'
 export default Vue.extend({
   name: 'Editor',
-  props: { dialog: Object },
+  props: { editDen: Object, dialog: Boolean },
   // props: { editovat: Boolean },
-  methods: {
-    close: function () {
-      // console.log(this.editovat)
-      this.$store.state.editace = false
-    },
-    log: function () {
-      console.log('v Editaci' || this.dialog)
-    // this.den = this.edit
+  watch: {
+    editDen: function (newVal, oldVal) { // watch it
+      console.log('Prop changed: ', newVal, ' | was: ', oldVal)
     }
   },
-  data: () => ({
-    den: {
-      id: null,
-      datum: '22.01.2020',
-      den: null,
-      kdo: null,
-      pozn1: null,
-      pozn2: null,
-      pozn3: null
+  // TODO  asi pozde prirazene
+  data () {
+    return {
+      den: this.editDen
     }
-  })
+  }
 })
 </script>
