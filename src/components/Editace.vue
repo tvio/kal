@@ -33,11 +33,12 @@ export default Vue.extend({
   watch: {
     editDen: function (newVal, oldVal) { // watch it
       console.log('Prop changed: ', newVal, ' | was: ', oldVal)
+      this.den = this.editDen
     }
   },
-  // TODO  asi pozde prirazene
   data () {
     return {
+      // den: this.editDen
       den: this.editDen
     }
   }

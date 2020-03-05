@@ -4,7 +4,7 @@
          <Den :den="den">  </Den>
        <v-btn color="orange"  text  @click.stop="$set(editDen,den.id,den);dialog=true;index=den.id;log()" >Editovat</v-btn>
          </v-card>
-          <editace  :editDen="editDen[index]" :dialog="dialog" ></editace>
+          <editace v-if="dialog"  :editDen="editDen[index]" :dialog="dialog" ></editace>
              <!-- <div v-for = "den in $store.state.dny" :key="den">
         {{den.datum}}
     </div> -->
