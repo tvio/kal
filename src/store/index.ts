@@ -16,17 +16,46 @@ export default new Vuex.Store({
     ],
     chaty: [
       { id: 1, denId: 9, kdo: 'Janik', text: 'Tak to teda nevím' },
-      { id: 1, denId: 2, kdo: 'Janik', text: 'Dneska taky nic nevim' }
+      { id: 2, denId: 9, kdo: 'Tomik', text: 'Zato ja vim' },
+      { id: 3, denId: 2, kdo: 'Janik', text: 'Dneska taky nic nevim' },
+      { id: 4, denId: 9, kdo: 'Janik', text: 'To nebude ono' },
+      { id: 5, denId: 9, kdo: 'Tomik', text: 'Finálně!!!!' },
+      { id: 6, denId: 3, kdo: 'Janik', text: 'Ddneska jsem zase dutej' }
     ]
   },
-  //TODO vratit jen dva atributy
   getters: {
     denByID: (state) => (id: number) => {
       return state.dny.find(den => den.id === id)
     },
+    // neni last chat
     lastChat: (state) => (denId: number) => {
-      hledam = state.chaty.find(chaty => chaty.denId === denId;
-      return hledam.kdo, hledam.text
+      const chatyDen = state.chaty.filter(chaty => chaty.denId === denId)
+      if (chatyDen.length > 0) {
+        const chatMaxId = chatyDen.reduce(function (prev, current) {
+          if (+current.id > +prev.id) {
+            return current
+          } else {
+            return prev
+          }
+        })
+        const chat = state.chaty.find(chaty => chaty.id === chatMaxId.id)
+        return chat.kdo + '  napsal ' + chat.text
+      }
+    },
+    karty: (state) => (id: number) => {
+      const chatyDen = state.chaty.filter(chaty => chaty.denId === id)
+
+      const chatMaxId = chatyDen.reduce(function (prev, current) {
+        if (+current.id > +prev.id) {
+          return current
+        } else {
+          return prev
+        }
+      })
+      return {
+        den: state.dny.find(den => den.id === id),
+        chat: state.chaty.find(chaty => chaty.id === chatMaxId.id)
+      }
     }
 
   },

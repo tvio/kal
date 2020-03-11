@@ -4,10 +4,11 @@
          <Den :den="den">  </Den>
          <div>
            <!-- //Zobrazit radne oba atributy z vuex -->
-          <v-card-text>Poslední debata: {{lastChat(den.id)}}</v-card-text>
+          <v-card-text  >Poslední debata: {{lastChat(den.id)}}</v-card-text>
          </div>
        <v-btn color="orange"  text  @click.stop="$set(editDen,den.id,den);dialog=true;index=den.id;log()" >Editovat</v-btn>
-         </v-card>
+            <v-btn color="green"  text  @click.stop="dialog2=true;index=den.id;log()" >Poznámky</v-btn>
+         </template>
           <editace v-if="dialog"  :editDen="editDen[index]" :dialog="dialog" ></editace>
                        <!-- <div v-for = "den in $store.state.dny" :key="den">
         {{den.datum}}
@@ -26,23 +27,28 @@ import store from '../store/index'
 import { mapGetters } from 'vuex'
 export default Vue.extend({
   data: () => ({
-    den: {},
+    den: { },
     editDen: [{}],
+
     dialog: false,
+    dialog2: false,
     index: null
+
   }),
   name: 'Dny',
   // mounted: function () {
   //   console.log(this.$store.getters.denByID(9))
   // },
   computed: {
-    ...mapGetters(['denByID', 'lastChat'])
+    ...mapGetters(['denByID', 'lastChat', 'karta'])
+
   },
   methods: {
     log: function () {
-      console.log(this.dialog)
       console.log(this.editDen)
+      console.log(this.den)
     }
+
   },
   components: {
     Den,
