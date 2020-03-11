@@ -14,12 +14,21 @@ export default new Vuex.Store({
       { id: 6, datum: '6.1.2021', den: 'so', kdo: 'Dalibor', pozn1: 'pozn1', pozn2: 'pozn2', pozn3: 'pozn3' },
       { id: 7, datum: '7.1.2021', den: 'ne', kdo: 'Dalibor', pozn1: 'pozn1', pozn2: 'pozn2', pozn3: 'pozn3' }
     ],
-    editace: false
+    chaty: [
+      { id: 1, denId: 9, kdo: 'Janik', text: 'Tak to teda nevím' },
+      { id: 1, denId: 2, kdo: 'Janik', text: 'Dneska taky nic nevim' }
+    ]
   },
+  //TODO vratit jen dva atributy
   getters: {
     denByID: (state) => (id: number) => {
       return state.dny.find(den => den.id === id)
+    },
+    lastChat: (state) => (denId: number) => {
+      hledam = state.chaty.find(chaty => chaty.denId === denId;
+      return hledam.kdo, hledam.text
     }
+
   },
   mutations: {
   },
