@@ -8,7 +8,7 @@
          </div>
        <v-btn color="orange"  text  @click.stop="$set(editDen,den.id,den);dialog=true;index=den.id;log()" >Editovat</v-btn>
             <v-btn color="green"  text  @click.stop="dialog2=true;index=den.id;log()" >Poznámky</v-btn>
-         </template>
+       </v-card>
           <editace v-if="dialog"  :editDen="editDen[index]" :dialog="dialog" ></editace>
                        <!-- <div v-for = "den in $store.state.dny" :key="den">
         {{den.datum}}
