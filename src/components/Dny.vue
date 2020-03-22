@@ -6,10 +6,11 @@
            <!-- //Zobrazit radne oba atributy z vuex -->
           <v-card-text  >Poslední debata: {{lastChat(den.id)}}</v-card-text>
          </div>
-       <v-btn color="orange"  text  @click.stop="$set(editDen,den.id,den);dialog=true;index=den.id;log()" >Editovat</v-btn>
-            <v-btn color="green"  text  @click.stop="dialog2=true;index=den.id;log()" >Poznámky</v-btn>
+       <v-btn color="orange"  text  @click="$set(editDen,den.id,den);dialog1=true;index=den.id;log()" >Editovat</v-btn>
+            <v-btn color="green"  text  @click="dialog2=true;index2=den.id;log()" >Poznámky</v-btn>
        </v-card>
-          <editace v-if="dialog"  :editDen="editDen[index]" :dialog="dialog" ></editace>
+          <editace v-if="dialog1"  :editDen="editDen[index]" :dialog1="dialog1" @ZpetDialog1="getZpetDialog1" ></editace>
+          <chat v-if="dialog2"  :denId="index2" :dialog2="dialog2" @ZpetDialog2="getZpetDialog2"  ></chat>
                        <!-- <div v-for = "den in $store.state.dny" :key="den">
         {{den.datum}}
     </div> -->
@@ -21,18 +22,20 @@
 import Vue from 'vue'
 import Den from './Den.vue'
 import Editace from './Editace.vue'
+import Chat from './Chat.vue'
 // import {mapState} from 'vuex'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import store from '../store/index'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 export default Vue.extend({
   data: () => ({
     den: { },
     editDen: [{}],
 
-    dialog: false,
+    dialog1: false,
     dialog2: false,
-    index: null
+    index: null,
+    idnex2: null
 
   }),
   name: 'Dny',
@@ -41,27 +44,28 @@ export default Vue.extend({
   // },
   computed: {
     ...mapGetters(['denByID', 'lastChat', 'karta'])
-
   },
   methods: {
     log: function () {
       console.log(this.editDen)
       console.log(this.den)
-    }
+      console.log()
+    },
 
+    // vrati modifikovanou dialog value z child editace
+    getZpetDialog1: function (value) {
+      this.dialog1 = value
+      console.log(this.dialog1)
+    },
+    getZpetDialog2: function (value) {
+      this.dialog2 = value
+      console.log(this.dialog2)
+    }
   },
   components: {
     Den,
-    Editace
+    Editace,
+    Chat
   }
-  // computed:{
-  //   ...mapState(['dny'])
-  // },
-  // computed: {
-  //   getIndex: () => {
-  //     return index
-  //   }
-  // },
-
 })
 </script>

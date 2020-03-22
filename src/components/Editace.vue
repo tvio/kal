@@ -1,5 +1,5 @@
 <template>
- <v-dialog v-model="dialog"  width="645" >
+ <v-dialog v-model="localDialog"  width="645" >
              <v-card  >
         <v-card-title>
           <span class="headline">Edituj a pak hlavně ukládej.
@@ -16,8 +16,8 @@
          </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click.stop="dialog=false">Close</v-btn>
-          <v-btn color="blue darken-1" text @click.stop="dialog=false">Save</v-btn>
+          <v-btn color="blue darken-1" text @click.stop="localDialog=false">Close</v-btn>
+          <v-btn color="blue darken-1" text @click.stop="localDialog=false">Save</v-btn>
         </v-card-actions>      </v-card>
          </v-dialog >
 </template>
@@ -28,19 +28,33 @@ import Vue from 'vue'
 import store from '../store/index'
 export default Vue.extend({
   name: 'Editor',
-  props: { editDen: Object, dialog: Boolean },
+  props: { editDen: Object, dialog1: Boolean },
   // props: { editovat: Boolean },
+  data () {
+    return {
+      // den: this.editDen
+      den: this.editDen,
+      localDialog: false
+    }
+  },
+  mounted () {
+    this.localDialog = this.dialog1
+  },
   watch: {
+
+    // nacteni do localu
+    dialog1: function () {
+      this.localDialog = this.dialog1
+    },
+    localDialog: function () {
+      // zpet na hlavni
+      this.$emit('ZpetDialog1', this.localDialog)
+    },
     editDen: function (newVal, oldVal) { // watch it
       console.log('Prop changed: ', newVal, ' | was: ', oldVal)
       this.den = this.editDen
     }
-  },
-  data () {
-    return {
-      // den: this.editDen
-      den: this.editDen
-    }
   }
+
 })
 </script>

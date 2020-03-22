@@ -22,6 +22,7 @@ export default new Vuex.Store({
       { id: 5, denId: 9, kdo: 'Tomik', text: 'Finálně!!!!' },
       { id: 6, denId: 3, kdo: 'Janik', text: 'Ddneska jsem zase dutej' }
     ]
+
   },
   getters: {
     denByID: (state) => (id: number) => {
