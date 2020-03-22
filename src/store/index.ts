@@ -15,12 +15,12 @@ export default new Vuex.Store({
       { id: 7, datum: '7.1.2021', den: 'ne', kdo: 'Dalibor', pozn1: 'pozn1', pozn2: 'pozn2', pozn3: 'pozn3' }
     ],
     chaty: [
-      { id: 1, denId: 9, kdo: 'Janik', text: 'Tak to teda nevím' },
-      { id: 2, denId: 9, kdo: 'Tomik', text: 'Zato ja vim' },
-      { id: 3, denId: 2, kdo: 'Janik', text: 'Dneska taky nic nevim' },
-      { id: 4, denId: 9, kdo: 'Janik', text: 'To nebude ono' },
-      { id: 5, denId: 9, kdo: 'Tomik', text: 'Finálně!!!!' },
-      { id: 6, denId: 3, kdo: 'Janik', text: 'Ddneska jsem zase dutej' }
+      { id: 1, datum: '9.5.2020 16:32:21', denId: 9, kdo: 'Janik', text: 'Tak to teda nevím' },
+      { id: 2, datum: '9.5.2020 17:32:16', denId: 9, kdo: 'Tomik', text: 'Zato ja vim' },
+      { id: 3, datum: '6.5.2020 09:12:21', denId: 2, kdo: 'Janik', text: 'Dneska taky nic nevim' },
+      { id: 4, datum: '10.5.2020 02:45:55', denId: 9, kdo: 'Janik', text: 'To nebude ono' },
+      { id: 5, datum: '11.5.2020 19:32:01', denId: 9, kdo: 'Tomik', text: 'Finálně!!!!' },
+      { id: 6, datum: '15.5.2020 09:00:21', denId: 3, kdo: 'Janik', text: 'Ddneska jsem zase dutej' }
     ]
 
   },
@@ -42,6 +42,9 @@ export default new Vuex.Store({
         const chat = state.chaty.find(chaty => chaty.id === chatMaxId.id)
         return chat.kdo + '  napsal ' + chat.text
       }
+    },
+    chatyDen: (state) => (denId: number) => {
+      return state.chaty.filter(chaty => denId === chaty.denId)
     },
     karty: (state) => (id: number) => {
       const chatyDen = state.chaty.filter(chaty => chaty.denId === id)

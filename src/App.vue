@@ -10,7 +10,7 @@
           transition="scale-transition"
           width="40">
          </v-img>
-         <h2 class="font-weight-bold ">Kalendář Tomíka a Janíka</h2>
+         <h3 class="font-weight-bold" >Kalendář T&J</h3>
           </div>
 
       <v-spacer></v-spacer>

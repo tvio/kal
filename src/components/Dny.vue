@@ -6,8 +6,13 @@
            <!-- //Zobrazit radne oba atributy z vuex -->
           <v-card-text  >Poslední debata: {{lastChat(den.id)}}</v-card-text>
          </div>
-       <v-btn color="orange"  text  @click="$set(editDen,den.id,den);dialog1=true;index=den.id;log()" >Editovat</v-btn>
-            <v-btn color="green"  text  @click="dialog2=true;index2=den.id;log()" >Poznámky</v-btn>
+
+       <v-btn color="orange"  text  @click="$set(editDen,den.id,den);dialog1=true;index=den.id" >Editovat
+            <v-icon color="orange" right light >mdi-calendar-edit</v-icon>
+            </v-btn>
+            <v-btn color="green"  text  @click="dialog2=true;index2=den.id;log()" >Poznámky
+               <v-icon color="green" right light >mdi-message-text</v-icon>
+            </v-btn>
        </v-card>
           <editace v-if="dialog1"  :editDen="editDen[index]" :dialog1="dialog1" @ZpetDialog1="getZpetDialog1" ></editace>
           <chat v-if="dialog2"  :denId="index2" :dialog2="dialog2" @ZpetDialog2="getZpetDialog2"  ></chat>
@@ -26,7 +31,7 @@ import Chat from './Chat.vue'
 // import {mapState} from 'vuex'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import store from '../store/index'
-import { mapGetters, mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 export default Vue.extend({
   data: () => ({
     den: { },
@@ -43,7 +48,7 @@ export default Vue.extend({
   //   console.log(this.$store.getters.denByID(9))
   // },
   computed: {
-    ...mapGetters(['denByID', 'lastChat', 'karta'])
+    ...mapGetters(['lastChat'])
   },
   methods: {
     log: function () {
