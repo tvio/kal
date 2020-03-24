@@ -38,10 +38,10 @@
            <v-card-actions>
 
             <v-flex xs10 offset-xs1>
-           <v-text-field autofocus label="Pišeš"></v-text-field>
+           <v-text-field v-model="chat" autofocus label="Pišeš"></v-text-field>
            </v-flex>
            <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" text @click.stop="localDialog=false">Odeslat</v-btn>
+            <v-btn type="submit" color="blue darken-1" text @click="saveChat">Odeslat</v-btn>
         </v-card-actions>
            </v-card>
          </v-dialog >
@@ -50,13 +50,14 @@
 <script lang="ts">
 
 import Vue from 'vue'
-// import store from '../store/index'
-import { mapGetters } from 'vuex'
+import store from '../store/index'
+import { mapGetters, mapState } from 'vuex'
 export default Vue.extend({
   name: 'Chat',
   data () {
     return {
-      localDialog: false
+      localDialog: false,
+      chat: String
     }
   },
   mounted () {
@@ -80,7 +81,8 @@ export default Vue.extend({
     }
   },
   computed: {
-    ...mapGetters(['chatyDen'])
+    ...mapGetters(['chatyDen', 'lastChatId', 'lastChat']),
+    ...mapState(['chaty', 'kdo'])
 
   },
   methods: {
@@ -89,6 +91,11 @@ export default Vue.extend({
     },
     vyberBarvu: function (kdo: string) {
       return (kdo === 'Janik') ? 'pink lighten-5' : 'blue lighten-5'
+    },
+    saveChat () {
+      const params: object = { id: (this.lastChatId() + 1), datum: '4.06.1955 18:54:21', idDen: 9, kdo: this.kdo, text: this.chat }
+      this.$store.commit('insertChat', params)
+      console.log(this.chaty)
     }
   }
 })

@@ -21,7 +21,8 @@ export default new Vuex.Store({
       { id: 4, datum: '10.5.2020 02:45:55', denId: 9, kdo: 'Janik', text: 'To nebude ono' },
       { id: 5, datum: '11.5.2020 19:32:01', denId: 9, kdo: 'Tomik', text: 'Finálně!!!!' },
       { id: 6, datum: '15.5.2020 09:00:21', denId: 3, kdo: 'Janik', text: 'Ddneska jsem zase dutej' }
-    ]
+    ],
+    kdo: 'Tomik'
 
   },
   getters: {
@@ -60,10 +61,22 @@ export default new Vuex.Store({
         den: state.dny.find(den => den.id === id),
         chat: state.chaty.find(chaty => chaty.id === chatMaxId.id)
       }
+    },
+    lastChatId: (state) => () => {
+      const lastchat = state.chaty.reduce(function (prev, current) {
+        if (+current.id > +prev.id) {
+          return current
+        } else {
+          return prev
+        }
+      })
+      return lastchat.id
     }
-
   },
   mutations: {
+    insertChat (state, chat) {
+      state.chaty.push(chat)
+    }
   },
   actions: {
   },
