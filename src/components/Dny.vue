@@ -1,16 +1,15 @@
 <template>
   <v-container>
-       <v-card   v-for="den in $store.state.dny"  :key="den.id" >
+       <v-card   v-for="den in dny"  :key="den.id" >
          <Den :den="den">  </Den>
          <div>
            <!-- //Zobrazit radne oba atributy z vuex -->
           <v-card-text  >Poslední debata: {{lastChat(den.id)}}</v-card-text>
          </div>
-
-       <v-btn color="orange"  text  @click="$set(editDen,den.id,den);dialog1=true;index=den.id" >Editovat
+         <v-btn color="orange"  text  @click="$set(editDen,den.id,den);dialog1=true;index=den.id" >Editovat
             <v-icon color="orange" right light >mdi-calendar-edit</v-icon>
             </v-btn>
-            <v-btn color="green"  text  @click="dialog2=true;index2=den.id;log()" >Poznámky
+            <v-btn color="green"  text  @click="dialog2=true;index2=den.id" >Poznámky
                <v-icon color="green" right light >mdi-message-text</v-icon>
             </v-btn>
        </v-card>
@@ -31,7 +30,7 @@ import Chat from './Chat.vue'
 // import {mapState} from 'vuex'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import store from '../store/index'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 export default Vue.extend({
   data: () => ({
     den: { },
@@ -48,7 +47,8 @@ export default Vue.extend({
   //   console.log(this.$store.getters.denByID(9))
   // },
   computed: {
-    ...mapGetters(['lastChat'])
+    ...mapGetters(['lastChat']),
+    ...mapState(['dny'])
   },
   methods: {
     log: function () {
@@ -60,11 +60,11 @@ export default Vue.extend({
     // vrati modifikovanou dialog value z child editace
     getZpetDialog1: function (value) {
       this.dialog1 = value
-      console.log(this.dialog1)
+      // console.log(this.dialog1)
     },
     getZpetDialog2: function (value) {
       this.dialog2 = value
-      console.log(this.dialog2)
+      // console.log(this.dialog2)
     }
   },
   components: {

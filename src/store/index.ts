@@ -77,11 +77,19 @@ export default new Vuex.Store({
     INSERT_CHAT (state, chat) {
       state.chaty.push(chat)
       // $set(this.chaty, this.lastChatId - 1, chat)
+    },
+    SAVE_EDIT (state, pDen) {
+      const denIndex = state.dny.findIndex(nden => nden.id === pDen.id)
+      state.dny[denIndex] = pDen
+      console.log(state.dny)
     }
   },
   actions: {
     insertChat: ({ commit }, payload) => {
       commit('INSERT_CHAT', payload)
+    },
+    saveEdit: ({ commit }, payload) => {
+      commit('SAVE_EDIT', payload)
     }
   },
   modules: {

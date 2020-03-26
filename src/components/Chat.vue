@@ -37,10 +37,10 @@
            <v-card-actions>
 
             <v-flex xs10 offset-xs1>
-           <v-text-field v-model="chat" autofocus label="Pišeš"></v-text-field>
+           <v-text-field v-model="chat" @keyup.enter="saveChat" autofocus label="Pišeš"></v-text-field>
            </v-flex>
            <v-spacer></v-spacer>
-            <v-btn type="submit" color="blue darken-1" text @click="saveChat">Odeslat</v-btn>
+            <v-btn type="submit" color="blue darken-1" text @click="saveChat" >Odeslat</v-btn>
         </v-card-actions>
            </v-card>
          </v-dialog >
@@ -98,8 +98,9 @@ export default Vue.extend({
       return (kdo === 'Janik') ? 'pink lighten-5' : 'blue lighten-5'
     },
     saveChat () {
-      const params: object = { id: (this.lastChatId() + 1), datum: '4.06.1955 18:54:21', idDen: this.denId, kdo: this.kdo, text: this.chat }
+      const params: object = { id: (this.lastChatId() + 1), datum: '4.06.1955 18:54:21', denId: this.denId, kdo: this.kdo, text: this.chat }
       this.$store.dispatch('insertChat', params)
+      this.chat = ''
       console.log(this.chaty)
     }
   }

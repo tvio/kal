@@ -17,7 +17,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="blue darken-1" text @click.stop="localDialog=false">Close</v-btn>
-          <v-btn color="blue darken-1" text @click.stop="localDialog=false">Save</v-btn>
+          <v-btn color="blue darken-1" text @click="saveEdit">Save</v-btn>
         </v-card-actions>      </v-card>
          </v-dialog >
 </template>
@@ -39,6 +39,13 @@ export default Vue.extend({
   },
   mounted () {
     this.localDialog = this.dialog1
+  },
+  methods: {
+    saveEdit: function () {
+      this.$store.dispatch('saveEdit', this.den)
+      this.localDialog = false
+      // console.log(this.den)
+    }
   },
   watch: {
 
