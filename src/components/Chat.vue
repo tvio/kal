@@ -11,10 +11,9 @@
           <v-divider></v-divider>
           <v-list three-line>
              <v-list-item
-            v-for="chat in chatyDen(denId)"
-            :key="chat.Id">
+            v-for="chat in filteredChaty" :key="chat.Id">
               <v-layout  align-left :class="vyberKam(chat.kdo)">
-             <v-card  class="d-flex" :class="vyberBarvu(chat.kdo)">
+             <v-card class="d-flex" :class="vyberBarvu(chat.kdo)">
             <v-list-item-icon>
               <div class="text-right">
               <div v-if="chat.kdo=='Janik'">
@@ -32,7 +31,7 @@
           </v-list-item-content>
             </v-card>
             </v-layout>
-        </v-list-item>
+              </v-list-item>
        </v-list>
          <v-divider></v-divider>
            <v-card-actions>
@@ -50,8 +49,8 @@
 <script lang="ts">
 
 import Vue from 'vue'
-import store from '../store/index'
-import { mapGetters, mapState } from 'vuex'
+// import store from '../store/index'
+import { mapGetters, mapState, mapActions } from 'vuex'
 export default Vue.extend({
   name: 'Chat',
   data () {
@@ -62,6 +61,7 @@ export default Vue.extend({
   },
   mounted () {
     this.localDialog = this.dialog2
+    this.chat = ''
   },
   props: { denId: Number, dialog2: Boolean },
   // props: { editovat: Boolean },
@@ -82,7 +82,12 @@ export default Vue.extend({
   },
   computed: {
     ...mapGetters(['chatyDen', 'lastChatId', 'lastChat']),
-    ...mapState(['chaty', 'kdo'])
+    ...mapState(['chaty', 'kdo']),
+    ...mapActions(['insertChat']),
+
+    filteredChaty: function () {
+      return this.chaty.filter(nchaty => nchaty.denId === this.denId)
+    }
 
   },
   methods: {
@@ -93,8 +98,8 @@ export default Vue.extend({
       return (kdo === 'Janik') ? 'pink lighten-5' : 'blue lighten-5'
     },
     saveChat () {
-      const params: object = { id: (this.lastChatId() + 1), datum: '4.06.1955 18:54:21', idDen: 9, kdo: this.kdo, text: this.chat }
-      this.$store.commit('insertChat', params)
+      const params: object = { id: (this.lastChatId() + 1), datum: '4.06.1955 18:54:21', idDen: this.denId, kdo: this.kdo, text: this.chat }
+      this.$store.dispatch('insertChat', params)
       console.log(this.chaty)
     }
   }

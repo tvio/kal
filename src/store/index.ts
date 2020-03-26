@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import Vuex from 'vuex'
+import Vuex, { Mutation } from 'vuex'
 
 Vue.use(Vuex)
 
@@ -74,11 +74,15 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    insertChat (state, chat) {
+    INSERT_CHAT (state, chat) {
       state.chaty.push(chat)
+      // $set(this.chaty, this.lastChatId - 1, chat)
     }
   },
   actions: {
+    insertChat: ({ commit }, payload) => {
+      commit('INSERT_CHAT', payload)
+    }
   },
   modules: {
   }
