@@ -1,5 +1,6 @@
 <template>
-<v-app-bar app dark color="primary">
+<v-content>
+   <v-app-bar app dark color="primary">
       <div class="d-flex align-center">
         <v-img
           alt="Kalendar"
@@ -15,11 +16,13 @@
       <v-spacer></v-spacer>
 
       <v-btn
-        to="test"      >
+      text
+        to="/test"      >
         <span class="mr-2">Přihlásit</span>
         <v-icon>mdi-open-in-new</v-icon>
       </v-btn>
     </v-app-bar>
+       </v-content>
 </template>
 
 <script lang="ts">

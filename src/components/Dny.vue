@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-contentainer>
        <v-card   v-for="den in dny"  :key="den.id" >
          <Den :den="den">  </Den>
          <div>
@@ -20,7 +20,7 @@
     </div> -->
     <!-- <v-dialog  :retain-focus="false" v-model="dialog"  width="600" > -->
 
-  </v-container>
+  </v-contentainer>
 </template>
 <script lang="ts">
 import Vue from 'vue'

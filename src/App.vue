@@ -1,11 +1,9 @@
 <template>
    <v-app>
+        <router-view></router-view>
      <Header></Header>
-     <router-view></router-view>
-    <v-content>
-      <Dny v-if="login"/>
-      </v-content >
-        </v-app>
+      <Dny />
+         </v-app>
 </template>
 
 <script lang="ts">

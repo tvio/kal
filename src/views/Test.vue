@@ -1,5 +1,9 @@
 <template>
-    <h1>test</h1>
+ <v-content>
+      <h1>uff</h1>
+           <p>test</p>
+
+ </v-content>
 </template>
 <script>
 import Vue from 'vue'
