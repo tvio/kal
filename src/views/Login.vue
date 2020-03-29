@@ -1,88 +1,75 @@
 <template>
-    <v-content>
-      <v-container
-        class="fill-height"
-        fluid
-      >
-        <v-row
-          align="center"
-          justify="center"
-        >
-          <v-col
-            cols="12"
-            sm="8"
-            md="4"
-          >
-            <v-card class="elevation-12">
-              <v-toolbar
-                color="primary"
-                dark
-                flat
-              >
-                <v-toolbar-title>Login form</v-toolbar-title>
-                <v-spacer />
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on }">
-                    <v-btn
-                      :href="source"
-                      icon
-                      large
-                      target="_blank"
-                      v-on="on"
-                    >
-                      <v-icon>mdi-code-tags</v-icon>
-                    </v-btn>
-                  </template>
-                  <span>Source</span>
-                </v-tooltip>
-                <v-tooltip right>
-                  <template v-slot:activator="{ on }">
-                    <v-btn
-                      icon
-                      large
-                      href="https://codepen.io/johnjleider/pen/pMvGQO"
-                      target="_blank"
-                      v-on="on"
-                    >
-                      <v-icon>mdi-codepen</v-icon>
-                    </v-btn>
-                  </template>
-                  <span>Codepen</span>
-                </v-tooltip>
-              </v-toolbar>
-              <v-card-text>
-                <v-form>
-                  <v-text-field
-                    label="Login"
-                    name="login"
-                    prepend-icon="person"
-                    type="text"
-                  />
+  <v-content>
+    <v-container class="fill-height" fluid>
+      <v-row align="center" justify="center">
+        <v-col cols="12" sm="8" md="4">
+          <v-card class="elevation-12">
+            <v-toolbar color="primary" dark flat>
+              <v-toolbar-title>Login form</v-toolbar-title>
+              <v-spacer />
+            </v-toolbar>
+            <v-card-text>
+              <v-form>
+                <v-text-field
+                  v-model="login"
+                  label="Login"
+                  name="login"
+                  prepend-icon="person"
+                  type="text"
+                  @keyup="msg = ''"
+                />
 
-                  <v-text-field
-                    id="password"
-                    label="Password"
-                    name="password"
-                    prepend-icon="lock"
-                    type="password"
-                  />
-                </v-form>
-              </v-card-text>
-              <v-card-actions>
-                <v-spacer />
-                <v-btn color="primary">Login</v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-content>
- </template>
+                <v-text-field
+                  id="password"
+                  v-model="password"
+                  label="Password"
+                  name="password"
+                  prepend-icon="lock"
+                  type="password"
+                  @keyup="msg = ''"
+                />
+                <v-card-text>{{ msg }}</v-card-text>
+              </v-form>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer />
+              <v-btn color="primary" type="submit" @click="provedLogin">Login</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
+  </v-content>
+</template>
 
-<script>
-export default {
-  props: {
-    source: String
+<script lang="ts">
+import Vue from 'vue'
+import { mapActions } from 'vuex'
+export default Vue.extend({
+  name: 'Login',
+  data: () => ({
+    login: String,
+    password: String,
+    msg: String
+  }),
+  mounted () {
+    this.login = ''
+    this.password = ''
+    this.msg = ''
+  },
+  methods: {
+    ...mapActions(['saveLogin']),
+    provedLogin: function () {
+      if (
+        (this.login === 'Tomik' || this.login === 'Janik') &&
+        this.password === 'Lego1234'
+      ) {
+        this.saveLogin({ login: this.login, password: this.password })
+        this.$router.push({ path: '/' })
+      } else {
+        this.msg = 'Chyba : Špatné přihlašovací údaje'
+      }
+    }
   }
-}
+})
 </script>

@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import Vuex, { Mutation } from 'vuex'
+import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
@@ -22,7 +22,8 @@ export default new Vuex.Store({
       { id: 5, datum: '11.5.2020 19:32:01', denId: 9, kdo: 'Tomik', text: 'Finálně!!!!' },
       { id: 6, datum: '15.5.2020 09:00:21', denId: 3, kdo: 'Janik', text: 'Ddneska jsem zase dutej' }
     ],
-    kdo: 'Tomik'
+    kdo: null,
+    idToken: null
 
   },
   getters: {
@@ -82,6 +83,11 @@ export default new Vuex.Store({
       const denIndex = state.dny.findIndex(nden => nden.id === pDen.id)
       state.dny[denIndex] = pDen
       console.log(state.dny)
+    },
+    SAVE_LOGIN (state, login) {
+      state.kdo = login.login
+      state.idToken = login.idToken
+      console.log(login)
     }
   },
   actions: {
@@ -90,6 +96,15 @@ export default new Vuex.Store({
     },
     saveEdit: ({ commit }, payload) => {
       commit('SAVE_EDIT', payload)
+    },
+    saveLogin: ({ commit }, payload: {login: string;password: string}) => {
+      console.log(payload)
+      const idToken = Math.random().toString(36).substr(2)
+      const celyLogin: {login: string; password: string; idToken?: string} = { login: payload.login, password: payload.password, idToken }
+      console.log(celyLogin)
+      celyLogin.idToken = idToken
+      console.log(celyLogin)
+      commit('SAVE_LOGIN', celyLogin)
     }
   },
   modules: {
