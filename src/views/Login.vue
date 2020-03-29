@@ -9,7 +9,7 @@
               <v-spacer />
             </v-toolbar>
             <v-card-text>
-              <v-form>
+              <v-form @submit.prevent>
                 <v-text-field
                   v-model="login"
                   label="Login"
@@ -33,7 +33,9 @@
             </v-card-text>
             <v-card-actions>
               <v-spacer />
-              <v-btn color="primary" type="submit" @click="provedLogin">Login</v-btn>
+              <v-btn color="primary" type="submit" @click="provedLogin"
+                >Login</v-btn
+              >
             </v-card-actions>
           </v-card>
         </v-col>

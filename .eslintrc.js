@@ -3,8 +3,7 @@ module.exports = {
 
   env: {
     node: true,
-    browser:true,
-         
+    browser:true
   },
 
  parserOptions: {
@@ -20,8 +19,9 @@ module.exports = {
     'plugin:vue/essential',
     '@vue/standard',
     '@vue/typescript/recommended',
-    'eslint:recommended',
-    '@vue/prettier',
-    '@vue/prettier/@typescript-eslint'
+    //'eslint:recommended',
+    // '@vue/prettier',
+    // '@vue/prettier/@typescript-eslint'
   ]
+    
 };
