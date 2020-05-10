@@ -60,59 +60,59 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import Vue from 'vue'
 // import store from '../store/index'
-import { mapGetters, mapState, mapActions } from "vuex";
+import { mapGetters, mapState, mapActions } from 'vuex'
 export default Vue.extend({
-  name: "Chat",
+  name: 'Chat',
   props: { denId: Number, dialog2: Boolean },
-  data() {
+  data () {
     return {
       localDialog: Boolean,
-      chat: String,
-    };
+      chat: String
+    }
   },
   watch: {
     dialog2: function () {
-      this.localDialog = this.dialog2;
+      this.localDialog = this.dialog2
     },
     localDialog: function () {
       // zpet na hlavni
-      this.$emit("ZpetDialog2", this.localDialog);
-    },
+      this.$emit('ZpetDialog2', this.localDialog)
+    }
   },
-  mounted() {
-    this.localDialog = this.dialog2;
-    this.chat = "";
+  mounted () {
+    this.localDialog = this.dialog2
+    this.chat = ''
   },
   computed: {
-    ...mapGetters(["chatyDen", "lastChatId", "lastChat"]),
-    ...mapState(["chaty", "kdo"]),
+    ...mapGetters(['chatyDen', 'lastChatId', 'lastChat']),
+    ...mapState(['chaty', 'kdo']),
 
     filteredChaty: function () {
-      return this.chaty.filter((nchaty) => nchaty.denId === this.denId);
-    },
+      return this.chaty.filter((nchaty) => nchaty.denId === this.denId)
+    }
   },
   methods: {
-    ...mapActions(["insertChat"]),
+    ...mapActions(['insertChat']),
     vyberKam: function (kdo: string) {
-      return kdo === "Janik" ? "justify-end" : "justify-start";
+      return kdo === 'Janik' ? 'justify-end' : 'justify-start'
     },
     vyberBarvu: function (kdo: string) {
-      return kdo === "Janik" ? "pink lighten-5" : "blue lighten-5";
+      return kdo === 'Janik' ? 'pink lighten-5' : 'blue lighten-5'
     },
-    saveChat() {
+    saveChat () {
       const params: object = {
         id: this.lastChatId() + 1,
-        datum: "4.06.1955 18:54:21",
+        datum: '4.06.1955 18:54:21',
         denId: this.denId,
         kdo: this.kdo,
-        text: this.chat,
-      };
-      this.insertChat(params);
-      this.chat = "";
-      console.log(this.chaty);
-    },
-  },
-});
+        text: this.chat
+      }
+      this.insertChat(params)
+      this.chat = ''
+      console.log(this.chaty)
+    }
+  }
+})
 </script>

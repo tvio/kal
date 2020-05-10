@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import axios from 'axios'
 
 Vue.use(Vuex)
 
@@ -89,8 +90,8 @@ export default new Vuex.Store({
       state.idToken = login.idToken
       console.log(login)
     },
-    DELETE_TOKEN(state){
-      state.idToken=''
+    DELETE_TOKEN (state) {
+      state.idToken = ''
     }
   },
   actions: {
@@ -101,19 +102,23 @@ export default new Vuex.Store({
       commit('SAVE_EDIT', payload)
     },
     saveLogin: ({ commit }, payload: {login: string;password: string}) => {
-      //console.log(payload)
+      // console.log(payload)
       const idToken = Math.random().toString(36).substr(2)
       const celyLogin: {login: string; password: string; idToken?: string} = { login: payload.login, password: payload.password, idToken }
-      //console.log(celyLogin)
+      // console.log(celyLogin)
       celyLogin.idToken = idToken
-      //console.log(celyLogin)
+      // console.log(celyLogin)
       commit('SAVE_LOGIN', celyLogin)
     },
-    removeToken:({commit})=>{
-        commit('DELETE_TOKEN')
+    removeToken: ({ commit }) => {
+      commit('DELETE_TOKEN')
+    },
+    initLoad: ({ commit }) => {
+      axios.get(process.env.BCK_URL + '/dny')
+      commit('LOAD_DATA', resp.data)
     }
   },
-  modules:{
+  modules: {
 
   }
 })
