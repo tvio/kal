@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="section  ma-2 pa-1">
   <v-card-title>
     {{den.den}} {{den.datum}}
   </v-card-title>
@@ -15,9 +15,8 @@
      <v-card-text>
    Dalibor:  {{den.pozn3}}
    </v-card-text>
-
-  </div>
-  </template>
+   </div>
+ </template>
 
 <script lang="ts">
 import Vue from 'vue'

@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import App from '../App.vue'
 import Test from '../views/Test.vue'
+import Dny from '../components/Dny.vue'
 import Login from '../views/Login.vue'
 import store from '../store/index'
 Vue.use(VueRouter)
@@ -9,8 +10,8 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'App',
-    component: App,
+    name: 'Dny',
+    component: Dny,
     beforeEnter (to, from, next) {
       if (store.state.idToken) {
         next()
@@ -23,7 +24,8 @@ const routes = [
     path: '/test',
     name: 'Test',
     component: Test
-  },
+  }
+  ,
   {
     path: '/login',
     name: 'Login',

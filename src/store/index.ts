@@ -214,9 +214,10 @@ export default new Vuex.Store({
     async initLoad({ commit }) {
       // const res = await axios.get(process.env.BCK_URL + '/dny')
       const res = await axios.get(
-        "https://arcane-dawn-99940.herokuapp.com/kal/dny"
+        process.env.VUE_APP_BCK_URL+'/dny'
       );
-      commit("LOAD_DATA", res);
+      console.log(res.data)
+      commit("LOAD_DATA", res.data)
     },
   },
   modules: {},

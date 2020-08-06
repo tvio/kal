@@ -1,8 +1,9 @@
 <template>
-  <v-container>
+  <v-container >
     <v-card v-for="den in dny" :key="den.id">
-      <Den :den="den" />
-      <div>
+      <Den :den="den" >
+             </Den>
+        <div>
         <!-- //Zobrazit radne oba atributy z vuex -->
         <v-card-text>Poslední debata: {{ lastChat(den.id) }}</v-card-text>
       </div>
@@ -59,7 +60,8 @@ import Editace from './Editace.vue'
 import Chat from './Chat.vue'
 // import {mapState} from 'vuex'
 // import store from '../store/index'
-import { mapGetters, mapState } from 'vuex'
+import { mapGetters, mapState,mapActions } from 'vuex'
+
 export default Vue.extend({
   name: 'Dny',
   data: () => ({
@@ -80,10 +82,13 @@ export default Vue.extend({
   },
   methods: {
     log: function () {
-      console.log(this.editDen)
+      // console.log(this.editDen)
       console.log(this.den)
-      console.log()
+      // console.log(),
     },
+    ...mapActions(["initLoad"])
+  ,
+    
 
     // vrati modifikovanou dialog value z child editace
     getZpetDialog1: function (value) {
@@ -99,6 +104,9 @@ export default Vue.extend({
     Den,
     Editace,
     Chat
+  },
+  mounted() {
+    this.initLoad();
   }
 })
 </script>

@@ -1,6 +1,6 @@
 <template>
-  <v-content>
-    <v-app-bar app dark color="primary">
+<v-container>
+    <v-app-bar  app dark height="70" color="primary">
       <div class="d-flex align-center">
         <v-img
           alt="Kalendar"
@@ -26,8 +26,8 @@
         <v-icon>mdi-open-in-new</v-icon>
       </v-btn>
     </v-app-bar>
-  </v-content>
-</template>
+    </v-container>
+  </template>
 
 <script lang="ts">
 import Vue from 'vue'
