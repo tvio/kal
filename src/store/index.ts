@@ -75,42 +75,42 @@ export default new Vuex.Store({
       {
         id: 1,
         datum: "9.5.2020 16:32:21",
-        denId: 9,
+        denid: 9,
         kdo: "Janik",
         text: "Tak to teda nevím",
       },
       {
         id: 2,
         datum: "9.5.2020 17:32:16",
-        denId: 9,
+        denid: 9,
         kdo: "Tomik",
         text: "Zato ja vim",
       },
       {
         id: 3,
         datum: "6.5.2020 09:12:21",
-        denId: 2,
+        denid: 2,
         kdo: "Janik",
         text: "Dneska taky nic nevim",
       },
       {
         id: 4,
         datum: "10.5.2020 02:45:55",
-        denId: 9,
+        denid: 9,
         kdo: "Janik",
         text: "To nebude ono",
       },
       {
         id: 5,
         datum: "11.5.2020 19:32:01",
-        denId: 9,
+        denid: 9,
         kdo: "Tomik",
         text: "Finálně!!!!",
       },
       {
         id: 6,
         datum: "15.5.2020 09:00:21",
-        denId: 3,
+        denid: 3,
         kdo: "Janik",
         text: "Ddneska jsem zase dutej",
       },
@@ -122,26 +122,26 @@ export default new Vuex.Store({
     denByID: (state) => (id: number) => {
       return state.dny.find((den) => den.id === id);
     },
-    // neni last chat
+    // upraveno pro novy backend /chat/lastchat kdy vracim do uvodni obrazovky jen last chaty v kazdem dnu
     lastChat: (state) => (denId: number) => {
-      const chatyDen = state.chaty.filter((chaty) => chaty.denId === denId);
-      if (chatyDen.length > 0) {
-        const chatMaxId = chatyDen.reduce(function (prev, current) {
-          if (+current.id > +prev.id) {
-            return current;
-          } else {
-            return prev;
-          }
-        });
-        const chat = state.chaty.find((chaty) => chaty.id === chatMaxId.id);
-        return chat.kdo + "  napsal " + chat.text;
-      }
-    },
+      const chat :any = state.chaty.find((chaty) => chaty.denid === denId)
+      console.log('chat mame'+chat.text);
+      // if (chatyDen.length > 0) {
+      //   const chatMaxId = chatyDen.reduce(function (prev, current) {
+      //     if (+current.id > +prev.id) {
+      //       return current;
+      //     } else {
+      //       return prev;
+      //     }
+      //   });
+      //   const chat = state.chaty.find((chaty) => chaty.id === chatMaxId.id);
+         return `${chat.kdo} napsal ${chat.text} v ${chat.datum}`
+      },
     chatyDen: (state) => (denId: number) => {
-      return state.chaty.filter((chaty) => denId === chaty.denId);
+      return state.chaty.filter((chaty) => denId === chaty.denid);
     },
     karty: (state) => (id: number) => {
-      const chatyDen = state.chaty.filter((chaty) => chaty.denId === id);
+      const chatyDen = state.chaty.filter((chaty) => chaty.denid === id);
 
       const chatMaxId = chatyDen.reduce(function (prev, current) {
         if (+current.id > +prev.id) {
@@ -184,8 +184,10 @@ export default new Vuex.Store({
     DELETE_TOKEN(state) {
       state.idToken = "";
     },
-    LOAD_DATA(state, res) {
-      state.dny = res;
+    LOAD_DATA(state, data) {
+      state.dny = data.res;
+      // nacitam z db pouze lastchty pro potreby uvodni stranky
+      state.chaty = data.res2; 
     },
   },
   actions: {
@@ -213,11 +215,13 @@ export default new Vuex.Store({
     },
     async initLoad({ commit }) {
       // const res = await axios.get(process.env.BCK_URL + '/dny')
-      const res = await axios.get(
-        process.env.VUE_APP_BCK_URL+'/dny'
+      const [res,res2] = await Promise.all(
+        [ axios.get(process.env.VUE_APP_BCK_URL+'/dny'),
+         axios.get(process.env.VUE_APP_BCK_URL+'/chaty/lastchat')]
       );
+      
       console.log(res.data)
-      commit("LOAD_DATA", res.data)
+      commit("LOAD_DATA", {res:res.data,res2:res2.data})
     },
   },
   modules: {},
