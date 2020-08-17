@@ -12,7 +12,7 @@
       </v-card-actions>
       <v-divider />
       <v-list three-line>
-        <v-list-item v-for="chat in filteredChaty" :key="chat.Id">
+        <v-list-item v-for="chat in filteredChaty" :key="chat.id">
           <v-layout align-left :class="vyberKam(chat.kdo)">
             <v-card class="d-flex" :class="vyberBarvu(chat.kdo)">
               <v-list-item-icon>
@@ -60,12 +60,15 @@
 </template>
 
 <script lang="ts">
+// TODO vlozit spravne datum do insert chat
+// TODO nejde filtr na denid pro vybrani GET chatu
+// nejde nacist chat okno po prvnim zavreni
 import Vue from 'vue'
 // import store from '../store/index'
 import { mapGetters, mapState, mapActions } from 'vuex'
 export default Vue.extend({
   name: 'Chat',
-  props: { denId: Number, dialog2: Boolean },
+  props: { denid: Number, dialog2: Boolean },
   data () {
     return {
       localDialog: Boolean,
@@ -90,7 +93,9 @@ export default Vue.extend({
     ...mapState(['chaty', 'kdo']),
 
     filteredChaty: function () {
-      return this.chaty.filter((nchaty) => nchaty.denId === this.denId)
+      // return this.chaty.filter((nchaty) => nchaty.denid ===this.denid)
+       
+       return this.chaty.filter((nchaty) => nchaty.denid === this.denid)
     }
   },
   methods: {
@@ -103,9 +108,10 @@ export default Vue.extend({
     },
     saveChat () {
       const params: object = {
-        id: this.lastChatId() + 1,
-        datum: '4.06.1955 18:54:21',
-        denId: this.denId,
+        //id: this.lastChatId() + 1,
+        //datum: new Date().toLocaleString(),             
+        datum: '19.6.2020',
+        denid: this.denid,
         kdo: this.kdo,
         text: this.chat
       }
@@ -113,6 +119,6 @@ export default Vue.extend({
       this.chat = ''
       console.log(this.chaty)
     }
-  }
-})
+  },
+  })
 </script>

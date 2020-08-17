@@ -1,3 +1,4 @@
+
 <template>
   <v-container >
     <v-card v-for="den in dny" :key="den.id">
@@ -5,6 +6,7 @@
              </Den>
         <div>
         <!-- //Zobrazit radne oba atributy z vuex -->
+        <!-- TODO nefunguje last chat, ukazuje to error a nejde pak klikat na chat -->
         <v-card-text>Poslední debata: {{ lastChat(den.id) }}</v-card-text>
       </div>
       <v-btn
@@ -27,6 +29,7 @@
         @click="
           dialog2 = true;
           index2 = den.id;
+          loadChaty(den.id);
         "
       >
         Poznámky
@@ -43,9 +46,10 @@
     />
     <chat
       v-if="dialog2"
-      :den-id="index2"
+      :denid="index2"
       :dialog2="dialog2"
       @ZpetDialog2="getZpetDialog2"
+      
     />
     <!-- <div v-for = "den in $store.state.dny" :key="den">
         {{den.datum}}
@@ -86,7 +90,7 @@ export default Vue.extend({
       console.log(this.den)
       // console.log(),
     },
-    ...mapActions(["initLoad"])
+    ...mapActions(["initLoad","loadChaty"])
   ,
     
 

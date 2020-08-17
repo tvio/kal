@@ -3,7 +3,7 @@
     <v-card>
       <v-card-title>
         <span class="headline"
-          >Edituj a pak hlavně ukládej. Svět je velikej a čas malinkej</span
+          >Edituj a pak hlavně ukládej. Svět je velikej a čas malinkej.</span
         >
       </v-card-title>
       <v-card-text>

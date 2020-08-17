@@ -123,20 +123,21 @@ export default new Vuex.Store({
       return state.dny.find((den) => den.id === id);
     },
     // upraveno pro novy backend /chat/lastchat kdy vracim do uvodni obrazovky jen last chaty v kazdem dnu
-    lastChat: (state) => (denId: number) => {
-      const chat :any = state.chaty.find((chaty) => chaty.denid === denId)
-      console.log('chat mame'+chat.text);
-      // if (chatyDen.length > 0) {
-      //   const chatMaxId = chatyDen.reduce(function (prev, current) {
-      //     if (+current.id > +prev.id) {
-      //       return current;
-      //     } else {
-      //       return prev;
-      //     }
-      //   });
-      //   const chat = state.chaty.find((chaty) => chaty.id === chatMaxId.id);
+   // TOHLE musim opravt delal jsem to dnes a spatne jsem si to prepsal
+    lastChat: (state) => (denid: number) => {
+      const chatyDen :any = state.chaty.find((chaty) => chaty.denid === denId)
+      
+      if (chatyDen.length > 0) {
+        const chatMaxId = chatyDen.reduce(function (prev, current) {
+          if (+current.id > +prev.id) {
+            return current;
+          } else {
+            return prev;
+          }
+        });
+        const chat = state.chaty.find((chaty) => chaty.id === chatMaxId.id);
          return `${chat.kdo} napsal ${chat.text} v ${chat.datum}`
-      },
+      }},
     chatyDen: (state) => (denId: number) => {
       return state.chaty.filter((chaty) => denId === chaty.denid);
     },
@@ -188,6 +189,13 @@ export default new Vuex.Store({
       state.dny = data.res;
       // nacitam z db pouze lastchty pro potreby uvodni stranky
       state.chaty = data.res2; 
+      //uprava na nacteni vseho
+      data.forEach( function( item1:any) {
+        if (!(item1.id in state.chaty.id)){
+       return Object.assign( state.chaty, item1)
+     }
+  
+   })
     },
   },
   actions: {
