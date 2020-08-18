@@ -64,6 +64,7 @@
 // TODO nejde filtr na denid pro vybrani GET chatu
 // nejde nacist chat okno po prvnim zavreni
 import Vue from 'vue'
+import moment from 'moment'
 // import store from '../store/index'
 import { mapGetters, mapState, mapActions } from 'vuex'
 export default Vue.extend({
@@ -107,16 +108,17 @@ export default Vue.extend({
       return kdo === 'Janik' ? 'pink lighten-5' : 'blue lighten-5'
     },
     saveChat () {
+      let now = moment();
       const params: object = {
         //id: this.lastChatId() + 1,
-        //datum: new Date().toLocaleString(),             
-        datum: '19.6.2020',
+        datum: now.format('YYYY-MM-DD'),             
         denid: this.denid,
         kdo: this.kdo,
         text: this.chat
       }
       this.insertChat(params)
       this.chat = ''
+      this.localDialog=false
       console.log(this.chaty)
     }
   },

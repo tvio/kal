@@ -91,10 +91,15 @@ export default Vue.extend({
       // console.log(),
     },
     ...mapActions(["initLoad","loadChaty"])
-  ,
-    
+    ,
+    scrollDneska(){
+      const el = this.$el.getElementsByClassName('scroll-to-me')[0];
 
-    // vrati modifikovanou dialog value z child editace
+      if(el){
+        el.scrollIntoView();
+      }
+    },
+        // vrati modifikovanou dialog value z child editace
     getZpetDialog1: function (value) {
       this.dialog1 = value
       // console.log(this.dialog1)
@@ -111,6 +116,7 @@ export default Vue.extend({
   },
   mounted() {
     this.initLoad();
+    this.scrollDneska();
   }
 })
 </script>

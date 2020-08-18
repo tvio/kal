@@ -1,5 +1,5 @@
 import Vue from "vue";
-import Vuex from "vuex";
+import Vuex, { Store } from "vuex";
 import axios from "axios";
 
 Vue.use(Vuex);
@@ -15,106 +15,9 @@ export default new Vuex.Store({
         pozn1: "pozn1",
         pozn2: "pozn2",
         pozn3: "pozn3",
-      },
-      {
-        id: 2,
-        datum: "2.1.2021",
-        den: "ut",
-        kdo: "Janik",
-        pozn1: "pozn1",
-        pozn2: "pozn2",
-        pozn3: "pozn3",
-      },
-      {
-        id: 3,
-        datum: "3.1.2021",
-        den: "st",
-        kdo: "Janik",
-        pozn1: "pozn1",
-        pozn2: "pozn2",
-        pozn3: "pozn3",
-      },
-      {
-        id: 4,
-        datum: "4.1.2021",
-        den: "ct",
-        kdo: "Janik",
-        pozn1: "pozn1",
-        pozn2: "pozn2",
-        pozn3: "pozn3",
-      },
-      {
-        id: 5,
-        datum: "5.1.2021",
-        den: "pa",
-        kdo: "Dalibor",
-        pozn1: "pozn1",
-        pozn2: "pozn2",
-        pozn3: "pozn3",
-      },
-      {
-        id: 6,
-        datum: "6.1.2021",
-        den: "so",
-        kdo: "Dalibor",
-        pozn1: "pozn1",
-        pozn2: "pozn2",
-        pozn3: "pozn3",
-      },
-      {
-        id: 7,
-        datum: "7.1.2021",
-        den: "ne",
-        kdo: "Dalibor",
-        pozn1: "pozn1",
-        pozn2: "pozn2",
-        pozn3: "pozn3",
-      },
+      }
     ],
-    chaty: [
-      {
-        id: 1,
-        datum: "9.5.2020 16:32:21",
-        denid: 9,
-        kdo: "Janik",
-        text: "Tak to teda nevím",
-      },
-      {
-        id: 2,
-        datum: "9.5.2020 17:32:16",
-        denid: 9,
-        kdo: "Tomik",
-        text: "Zato ja vim",
-      },
-      {
-        id: 3,
-        datum: "6.5.2020 09:12:21",
-        denid: 2,
-        kdo: "Janik",
-        text: "Dneska taky nic nevim",
-      },
-      {
-        id: 4,
-        datum: "10.5.2020 02:45:55",
-        denid: 9,
-        kdo: "Janik",
-        text: "To nebude ono",
-      },
-      {
-        id: 5,
-        datum: "11.5.2020 19:32:01",
-        denid: 9,
-        kdo: "Tomik",
-        text: "Finálně!!!!",
-      },
-      {
-        id: 6,
-        datum: "15.5.2020 09:00:21",
-        denid: 3,
-        kdo: "Janik",
-        text: "Ddneska jsem zase dutej",
-      },
-    ],
+    chaty: [],
     kdo: null,
     idToken: null,
   },
@@ -125,7 +28,7 @@ export default new Vuex.Store({
     // upraveno pro novy backend /chat/lastchat kdy vracim do uvodni obrazovky jen last chaty v kazdem dnu
    // TOHLE musim opravt delal jsem to dnes a spatne jsem si to prepsal
     lastChat: (state) => (denid: number) => {
-      const chatyDen :any = state.chaty.find((chaty) => chaty.denid === denId)
+      const chatyDen :any = state.chaty.filter((chaty) => chaty.denid === denid)
       
       if (chatyDen.length > 0) {
         const chatMaxId = chatyDen.reduce(function (prev, current) {
@@ -137,7 +40,10 @@ export default new Vuex.Store({
         });
         const chat = state.chaty.find((chaty) => chaty.id === chatMaxId.id);
          return `${chat.kdo} napsal ${chat.text} v ${chat.datum}`
-      }},
+      } else {
+        return 'Není zatím poznámka'
+      }
+    },
     chatyDen: (state) => (denId: number) => {
       return state.chaty.filter((chaty) => denId === chaty.denid);
     },
@@ -175,47 +81,52 @@ export default new Vuex.Store({
     SAVE_EDIT(state, pDen) {
       const denIndex = state.dny.findIndex((nden) => nden.id === pDen.id);
       state.dny[denIndex] = pDen;
-      console.log(state.dny);
-    },
+        },
     SAVE_LOGIN(state, login) {
       state.kdo = login.login;
       state.idToken = login.idToken;
-      console.log(login);
-    },
+        },
     DELETE_TOKEN(state) {
       state.idToken = "";
     },
-    LOAD_DATA(state, data) {
+    LOAD_DATA(state:any, data:any) {
       state.dny = data.res;
-      // nacitam z db pouze lastchty pro potreby uvodni stranky
-      state.chaty = data.res2; 
-      //uprava na nacteni vseho
+       data.res2.forEach( function( item1:any) {
+        let check = state.chaty.find((store)=> store.id === item1.id)||'neniVeState'
+         if (typeof check === 'string'){
+        state.chaty.push(item1)
+        check = 'reset'
+    
+        }
+       })
+      },
+    LOAD_CHATY(state:any,data:any){
       data.forEach( function( item1:any) {
-        if (!(item1.id in state.chaty.id)){
-       return Object.assign( state.chaty, item1)
-     }
-  
-   })
-    },
+         let check = state.chaty.find((store)=> store.id === item1.id)||'neniVeState'
+          if (typeof check === 'string'){
+        state.chaty.push(item1)
+        check = 'reset'
+             }
+    })
+    }
   },
   actions: {
-    insertChat: ({ commit }, payload) => {
-      commit("INSERT_CHAT", payload);
-    },
+    async insertChat ({ commit }, payload) {
+      const res:any = await axios.post(process.env.VUE_APP_BCK_URL+'/chaty',payload)
+      commit("INSERT_CHAT", res.data)
+     },
     saveEdit: ({ commit }, payload) => {
       commit("SAVE_EDIT", payload);
     },
     saveLogin: ({ commit }, payload: { login: string; password: string }) => {
-      // console.log(payload)
+      
       const idToken = Math.random().toString(36).substr(2);
       const celyLogin: { login: string; password: string; idToken?: string } = {
         login: payload.login,
         password: payload.password,
         idToken,
       };
-      // console.log(celyLogin)
       celyLogin.idToken = idToken;
-      // console.log(celyLogin)
       commit("SAVE_LOGIN", celyLogin);
     },
     removeToken: ({ commit }) => {
@@ -227,10 +138,13 @@ export default new Vuex.Store({
         [ axios.get(process.env.VUE_APP_BCK_URL+'/dny'),
          axios.get(process.env.VUE_APP_BCK_URL+'/chaty/lastchat')]
       );
-      
-      console.log(res.data)
       commit("LOAD_DATA", {res:res.data,res2:res2.data})
     },
+   async loadChaty({commit},denid){
+      const res = await axios.get(process.env.VUE_APP_BCK_URL+'/chaty/'+denid)
+      commit('LOAD_CHATY',res.data)
+      
+    }
   },
-  modules: {},
+    modules: {},
 });
