@@ -2,6 +2,7 @@
 <template>
   <v-container >
     <v-card v-for="den in dny" :key="den.id">
+      <div :id="den.datum">
       <Den :den="den" >
              </Den>
         <div>
@@ -37,6 +38,7 @@
           mdi-message-text
         </v-icon>
       </v-btn>
+      </div>
     </v-card>
     <editace
       v-if="dialog1"
@@ -62,6 +64,7 @@ import Vue from 'vue'
 import Den from './Den.vue'
 import Editace from './Editace.vue'
 import Chat from './Chat.vue'
+import moment from 'moment'
 // import {mapState} from 'vuex'
 // import store from '../store/index'
 import { mapGetters, mapState,mapActions } from 'vuex'
@@ -93,10 +96,16 @@ export default Vue.extend({
     ...mapActions(["initLoad","loadChaty"])
     ,
     scrollDneska(){
-      const el = this.$el.getElementsByClassName('scroll-to-me')[0];
-
+      const Dnesek = moment()
+      //skroluju na vcerejsem , aby byl videt dnesek
+      const Vcerejsek = Dnesek.subtract(1,'d').format('DD.MM.YYYY')
+      //const el = this.$refs.myIdDnesek 
+      console.log(Vcerejsek)
+      //Tohle nejde, ale jde obcas getElementById po refreshi appky
+      const el = this.$refs.Vcerejsek
+      console.log(el);
       if(el){
-        el.scrollIntoView();
+        el.scrollIntoView({behavior:'smooth'});
       }
     },
         // vrati modifikovanou dialog value z child editace
