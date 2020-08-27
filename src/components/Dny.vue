@@ -1,9 +1,10 @@
 
 <template>
   <v-container >
-    <v-card v-for="den in dny" :key="den.id">
-      <div :id="den.datum">
-      <Den :den="den" >
+    <v-card v-for="den in dny" :key="den.id" >
+      <div :id = "den.datum" ref="den.datum">
+
+        <Den :den="den" >
              </Den>
         <div>
         <!-- //Zobrazit radne oba atributy z vuex -->
@@ -39,7 +40,7 @@
         </v-icon>
       </v-btn>
       </div>
-    </v-card>
+       </v-card>
     <editace
       v-if="dialog1"
       :edit-den="editDen[index]"
@@ -96,13 +97,17 @@ export default Vue.extend({
     ...mapActions(["initLoad","loadChaty"])
     ,
     scrollDneska(){
+      
       const Dnesek = moment()
       //skroluju na vcerejsem , aby byl videt dnesek
       const Vcerejsek = Dnesek.subtract(1,'d').format('DD.MM.YYYY')
       //const el = this.$refs.myIdDnesek 
       console.log(Vcerejsek)
+      console.log(this.$refs)
+      //console.log('tohle neco naslo?>>'+this.$refs.najdi.find( el => el(Vcerejsek)))
       //Tohle nejde, ale jde obcas getElementById po refreshi appky
-      const el = this.$refs.Vcerejsek
+      const el = this.$refs.find( el => el = '06.08.2020')
+      const el = document.getElementById(Vcerejsek)
       console.log(el);
       if(el){
         el.scrollIntoView({behavior:'smooth'});
@@ -125,7 +130,11 @@ export default Vue.extend({
   },
   mounted() {
     this.initLoad();
-    this.scrollDneska();
+    this.$nextTick(function()
+    {
+      this.scrollDneska();
+    })
+   
   }
 })
 </script>
