@@ -68,7 +68,6 @@ export default Vue.extend({
   data: () => ({
     den: {},
     editDen: [{}],
-
     dialog1: false,
     dialog2: false,
     index: null,
@@ -87,6 +86,9 @@ export default Vue.extend({
       console.log(this.den);
       // console.log(),
     },
+    bez: function (s: string) {
+      return s.split(".").join("");
+    },
     ...mapActions(["initLoad", "loadChaty"]),
     scrollDneska() {
       const Dnesek = moment();
@@ -94,24 +96,21 @@ export default Vue.extend({
       const Vcerejsek = Dnesek.subtract(1, "d").format("DD.MM.YYYY");
       //const el = this.$refs.myIdDnesek
       console.log(Vcerejsek);
+
       console.log(this.$refs);
-      console.log(this.$refs.datum[0]);
-      console.log(this.$refs.datum[1]);
-      // console.log(this.$refs.find((x) => (x = "div#29.12.2020")));
-      // console.log(
-      //   "tohle neco naslo?>>" + this.$refs.find((el) => el(Vcerejsek))
-      // );
-      //Tohle nejde, ale jde obcas getElementById po refreshi appky
-      // const el = this.$refs.find((el) => (el = "06.08.2020"));
-      console.log("hladam");
-      console.log(this.$refs.datum.find((ele) => (ele = "div#21.05.2020")));
-      console.log("konechledani");
-      const el = this.$refs.datum[9];
-      //const el = "27.12.2020";
-      console.log(el);
-      if (el) {
-        el.scrollIntoView({ behavior: "smooth" });
+      for (const x in this.$refs.datum) {
+        console.log(this.$refs.datum[x]);
       }
+      for (let x in this.$refs.datum) {
+        if (this.$refs.datum[x].id === Vcerejsek) {
+          console.log(this.$refs.datum[x]);
+          let el = this.$refs.datum[x];
+          console.log(el);
+          el.scrollIntoView({ behavior: "smooth" });
+        }
+      }
+
+      //const el = "27.12.2020";
     },
 
     // vrati modifikovanou dialog value z child editace
