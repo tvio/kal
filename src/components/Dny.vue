@@ -94,23 +94,19 @@ export default Vue.extend({
       const Dnesek = moment();
       //skroluju na vcerejsem , aby byl videt dnesek
       const Vcerejsek = Dnesek.subtract(1, "d").format("DD.MM.YYYY");
-      //const el = this.$refs.myIdDnesek
-      console.log(Vcerejsek);
-
-      console.log(this.$refs);
+      //console.log(Vcerejsek);
+      //console.log(this.$refs);
       for (const x in this.$refs.datum) {
         console.log(this.$refs.datum[x]);
       }
       for (let x in this.$refs.datum) {
         if (this.$refs.datum[x].id === Vcerejsek) {
-          console.log(this.$refs.datum[x]);
+          //console.log(this.$refs.datum[x]);
           let el = this.$refs.datum[x];
-          console.log(el);
+          // console.log(el);
           el.scrollIntoView({ behavior: "smooth" });
         }
       }
-
-      //const el = "27.12.2020";
     },
 
     // vrati modifikovanou dialog value z child editace
